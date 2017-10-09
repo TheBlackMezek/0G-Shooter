@@ -2,6 +2,8 @@
 
 #include "sfwdraw.h"
 
+#include "Player.h"
+
 
 
 int main()
@@ -11,9 +13,20 @@ int main()
 
 	sfw::setBackgroundColor(BLACK);
 
+
+
+	Player player;
+
+
+
+
 	while (sfw::stepContext())
 	{
-		sfw::drawCircle(10, 10, 10);
+		
+		player.update();
+
+		player.draw();
+
 	}
 
 	return 0;
