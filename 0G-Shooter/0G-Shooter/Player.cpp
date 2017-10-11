@@ -4,6 +4,7 @@
 #include <cmath>
 
 #include "sfwdraw.h"
+#include "MathLib\Vec2.h"
 
 
 
@@ -14,7 +15,13 @@ Player::Player()
 	speed = 2;
 
 	rotation = 0;
-	rotSpeed = 0.1;
+	rotSpeed = 0.01;
+
+	centerX = 800 / 2;
+	centerY = 600 / 2;
+
+	facing.x = 0;
+	facing.y = 0;
 }
 
 
@@ -49,6 +56,8 @@ void Player::update()
 		{
 			rotation -= M_PI * 2;
 		}
+		facing.x = cos(rotation);
+		facing.y = sin(rotation);
 	}
 	if (sfw::getKey('E'))
 	{
@@ -57,12 +66,17 @@ void Player::update()
 		{
 			rotation += M_PI * 2;
 		}
+		facing.x = cos(rotation);
+		facing.y = sin(rotation);
 	}
 }
 
 void Player::draw()
 {
-	sfw::drawCircle(x, y, 20);
+	//sfw::drawCircle(x, y, 20);
+	sfw::drawCircle(centerX, centerY, 20);
 
 	sfw::drawLine(x, y, x + cos(rotation) * 30, y + sin(rotation) * 30);
+	//sfw::drawLine(centerX, centerY, centerX + cos(rotation) * 30, centerY + sin(rotation) * 30);
+	sfw::drawLine(centerX, centerY, centerX, centerY + 30);
 }

@@ -1,4 +1,10 @@
 #pragma once
+
+
+//union vec2;
+#include "MathLib\Vec2.h"
+
+
 class Player
 {
 public:
@@ -10,10 +16,14 @@ public:
 	float speed;
 
 	float rotation;
+	vec2 facing;
 	float rotSpeed;
 
 	void update();
 
 	void draw();
+private:
+	float centerX;
+	float centerY;
 };
 
