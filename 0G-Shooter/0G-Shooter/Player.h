@@ -9,6 +9,9 @@ public:
 	float y;
 	float speed;
 
+	float rotation;
+	float rotSpeed;
+
 	void update();
 
 	void draw();
