@@ -34,19 +34,29 @@ void Player::update()
 {
 	if (sfw::getKey('W'))
 	{
-		y += speed;
+		//y += speed;
+		x += facing.x * speed;
+		y += facing.y * speed;
 	}
 	if (sfw::getKey('S'))
 	{
-		y -= speed;
+		//y -= speed;
+		x -= facing.x * speed;
+		y -= facing.y * speed;
 	}
 	if (sfw::getKey('A'))
 	{
-		x -= speed;
+		//x -= speed;
+		vec2 perp = perpendicular(facing, false);
+		x += perp.x * speed;
+		y += perp.y * speed;
 	}
 	if (sfw::getKey('D'))
 	{
-		x += speed;
+		//x += speed;
+		vec2 perp = perpendicular(facing, true);
+		x += perp.x * speed;
+		y += perp.y * speed;
 	}
 
 	if (sfw::getKey('Q'))

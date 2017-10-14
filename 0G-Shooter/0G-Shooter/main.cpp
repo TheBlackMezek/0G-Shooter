@@ -42,6 +42,15 @@ int main()
 		sfw::drawLine(lineStart.x, lineStart.y, lineEnd.x, lineEnd.y);
 		sfw::drawCircle(player.x, player.y, 20);
 
+		vec2 renderFacing;
+		renderFacing.x = 0;
+		renderFacing.y = 1;
+		float facingAng = angle(player.facing, renderFacing);
+		if (isAngleClockwise(player.facing, renderFacing))
+		{
+			facingAng *= -1;
+		}
+
 		vec2 startOffset;
 		startOffset.x = player.x - lineStart.x;
 		startOffset.y = player.y - lineStart.y;
@@ -63,10 +72,10 @@ int main()
 		}
 
 		//sfw::drawLine(lineStart.x, lineStart.y, lineEnd.x, lineEnd.y);
-		sfw::drawLine(	400 + cos(startAng) * startMag,
-						300 + sin(startAng) * startMag,
-						400 + cos(endAng) * endMag,
-						300 + sin(endAng) * endMag);
+		sfw::drawLine(	400 + cos(startAng + facingAng) * startMag,
+						300 + sin(startAng + facingAng) * startMag,
+						400 + cos(endAng + facingAng) * endMag,
+						300 + sin(endAng + facingAng) * endMag);
 
 	}
 
