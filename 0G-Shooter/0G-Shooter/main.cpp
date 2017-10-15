@@ -6,6 +6,8 @@
 #include "MathLib\Vec2.h"
 
 #include "Player.h"
+#include "Box.h"
+#include "Circle.h"
 
 
 
@@ -39,38 +41,13 @@ int main()
 
 		player.draw();
 
-		sfw::drawLine(lineStart.x, lineStart.y, lineEnd.x, lineEnd.y);
-		sfw::drawCircle(player.x, player.y, 20);
-
-
-		vec2 startOffset;
-		startOffset.x = player.x - lineStart.x;
-		startOffset.y = player.y - lineStart.y;
-		float startMag = magnitude(startOffset);
-		vec2 endOffset;
-		endOffset.x = player.x - lineEnd.x;
-		endOffset.y = player.y - lineEnd.y;
-		float endMag = magnitude(endOffset);
-
-		float startAng = angle(player.facing, startOffset);
-		if (isAngleClockwise(player.facing, startOffset))
-		{
-			startAng *= -1;
-		}
-		float endAng = angle(player.facing, endOffset);
-		if (isAngleClockwise(player.facing, endOffset))
-		{
-			endAng *= -1;
-		}
-
-		startAng += M_PI;
-		endAng += M_PI;
-
 		//sfw::drawLine(lineStart.x, lineStart.y, lineEnd.x, lineEnd.y);
-		sfw::drawLine(	400 + sin(startAng) * startMag,
-						300 + cos(startAng) * startMag,
-						400 + sin(endAng) * endMag,
-						300 + cos(endAng) * endMag);
+		//sfw::drawCircle(player.x, player.y, 20);
+
+
+		Box::draw(ppos, player.facing, { 100, 100 }, { 80, 40 });
+		Box::draw(ppos, player.facing, { 500, 100 }, { 20, 90 });
+		Circle::draw(ppos, player.facing, { 100, 500 }, 10);
 
 	}
 

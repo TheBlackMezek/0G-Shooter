@@ -15,7 +15,7 @@ Player::Player()
 	speed = 2;
 
 	rotation = 0;
-	rotSpeed = 0.01;
+	rotSpeed = 0.04;
 
 	centerX = 800 / 2;
 	centerY = 600 / 2;
@@ -86,7 +86,7 @@ void Player::draw()
 	//sfw::drawCircle(x, y, 20);
 	sfw::drawCircle(centerX, centerY, 20);
 
-	sfw::drawLine(x, y, x + cos(rotation) * 30, y + sin(rotation) * 30);
+	//sfw::drawLine(x, y, x + cos(rotation) * 30, y + sin(rotation) * 30);
 	//sfw::drawLine(centerX, centerY, centerX + cos(rotation) * 30, centerY + sin(rotation) * 30);
 	sfw::drawLine(centerX, centerY, centerX, centerY + 30);
 }
