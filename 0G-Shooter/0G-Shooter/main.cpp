@@ -35,7 +35,7 @@ int main()
 	CircleCollider c1;
 	c1.pos = { 100, 500 };
 	c1.radius = 10;
-	c1.canMove = true;
+	c1.canMove = false;
 
 	
 
@@ -51,7 +51,7 @@ int main()
 
 
 
-		CircleCollider::collide(c1, player.collider);
+		CircleCollider::collide(player.collider, c1);
 
 
 

@@ -1,6 +1,8 @@
 #include "CircleCollider.h"
 
 
+#include <cmath>
+
 #include "sfwdraw.h"
 
 #include "Circle.h"
@@ -43,31 +45,63 @@ void CircleCollider::draw(vec2 playerPos, vec2 playerFacing)
 
 bool CircleCollider::collide(CircleCollider& a, CircleCollider& b)
 {
-	if ((a.pos.x + a.radius + b.radius > b.pos.x &&
-		b.pos.x + a.radius + b.radius > a.pos.x &&
-		a.pos.y + a.radius + b.radius > b.pos.y &&
-		b.pos.y + a.radius + b.radius > a.pos.y) &&
-		//theoretical AABBs are overlapping, possible collision
-		(distance(a.pos, b.pos) < a.radius + b.radius)
-		//confirmed collision
-		)
+	//if ((a.pos.x + a.radius + b.radius > b.pos.x &&
+	//	b.pos.x + a.radius + b.radius > a.pos.x &&
+	//	a.pos.y + a.radius + b.radius > b.pos.y &&
+	//	b.pos.y + a.radius + b.radius > a.pos.y) &&
+	//	//theoretical AABBs are overlapping, possible collision
+	//	(distance(a.pos, b.pos) < a.radius + b.radius)
+	//	//confirmed collision
+	//	)
+	//{
+	//	float v1x = (a.vel.x * (a.mass - b.mass) + (2 * b.mass * b.vel.x) / (a.mass + b.mass));
+	//	float v2x = (b.vel.x * (b.mass - a.mass) + (2 * a.mass * a.vel.x) / (b.mass + a.mass));
+	//	float v1y = (a.vel.y * (a.mass - b.mass) + (2 * b.mass * b.vel.y) / (a.mass + b.mass));
+	//	float v2y = (b.vel.y * (b.mass - a.mass) + (2 * a.mass * a.vel.y) / (b.mass + a.mass));
+	//	
+	//	a.vel = { v1x, v1y };
+	//	b.vel = { v2x, v2y };
+	//
+	//	a.update();
+	//	b.update();
+	//
+	//
+	//	return true;
+	//}
+	//
+	//return false;
+
+	//taken from http://ericleong.me/research/circle-circle/
+
+	if (a.canMove && !b.canMove)
 	{
-		float v1x = (a.vel.x * (a.mass - b.mass) + (2 * b.mass * b.vel.x) / (a.mass + b.mass));
-		float v2x = (b.vel.x * (b.mass - a.mass) + (2 * a.mass * a.vel.x) / (b.mass + a.mass));
-		float v1y = (a.vel.y * (a.mass - b.mass) + (2 * b.mass * b.vel.y) / (a.mass + b.mass));
-		float v2y = (b.vel.y * (b.mass - a.mass) + (2 * a.mass * a.vel.y) / (b.mass + a.mass));
-		
-		a.vel = { v1x, v1y };
-		b.vel = { v2x, v2y };
+		//vec2 aMove = a.vel * sfw::getDeltaTime();
+		vec2 d = closestPointOnLineToPoint(a.pos, a.pos + a.vel, b.pos);
+		float dist = distance(b.pos, d);
+		if (dist <= pow(a.radius + b.radius, 2))
+		{
+			//collision
+			float backDist = sqrt(pow(a.radius + b.radius, 2) - dist);
+			float moveVecLen = sqrt(pow(a.vel.x, 2) + pow(a.vel.y, 2));
+			vec2 cpoint;
+			cpoint.x = d.x - backDist * (a.vel.x / moveVecLen);
+			cpoint.y = d.y - backDist * (a.vel.y / moveVecLen);
 
-		a.update();
-		b.update();
+			vec2 n = b.pos - cpoint;
+			normalize(n);
+			float p = (2 * dot(a.vel, n)) / (a.mass + b.mass);
 
+			vec2 w = a.vel - p * (a.mass * n - b.mass * n);
+			a.vel = w;
 
-		return true;
+			return true;
+		}
+		else
+		{
+			//no collision
+			return false;
+		}
 	}
-
-	return false;
 }
 
 
