@@ -69,3 +69,33 @@ bool CircleCollider::collide(CircleCollider& a, CircleCollider& b)
 
 	return false;
 }
+
+
+
+vec2 CircleCollider::closestPointOnLineToPoint(vec2 start, vec2 end, vec2 point)
+{
+	//formula taken from http://ericleong.me/research/circle-circle/
+	vec2 ret;
+	ret.x = 0;
+	ret.y = 0;
+
+	float A1 = end.y - start.y;
+	float B1 = start.x - end.x;
+
+	double C1 = (end.y - start.y) * start.x + (start.x - end.x) * start.y;
+	double C2 = -B1 * point.x + A1 * point.y;
+	double det = A1 * A1 - -B1 * B1;
+
+	if (det != 0)
+	{
+		ret.x = (float)((A1*C1 - B1*C2) / det);
+		ret.y = (float)((A1*C2 - -B1*C2) / det);
+	}
+	else
+	{
+		ret = point;
+	}
+
+
+	return ret;
+}
