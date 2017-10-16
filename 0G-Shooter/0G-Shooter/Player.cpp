@@ -10,8 +10,8 @@
 
 Player::Player()
 {
-	x = 0;
-	y = 0;
+	collider.pos.x = 0;
+	collider.pos.y = 0;
 	speed = 2;
 
 	rotation = 0;
@@ -22,6 +22,9 @@ Player::Player()
 
 	facing.x = 0;
 	facing.y = 0;
+
+	collider.canMove = true;
+	collider.radius = 20;
 }
 
 
@@ -35,28 +38,28 @@ void Player::update()
 	if (sfw::getKey('W'))
 	{
 		//y += speed;
-		x += facing.x * speed;
-		y += facing.y * speed;
+		collider.pos.x += facing.x * speed;
+		collider.pos.y += facing.y * speed;
 	}
 	if (sfw::getKey('S'))
 	{
 		//y -= speed;
-		x -= facing.x * speed;
-		y -= facing.y * speed;
+		collider.pos.x -= facing.x * speed;
+		collider.pos.y -= facing.y * speed;
 	}
 	if (sfw::getKey('A'))
 	{
 		//x -= speed;
 		vec2 perp = perpendicular(facing, false);
-		x += perp.x * speed;
-		y += perp.y * speed;
+		collider.pos.x += perp.x * speed;
+		collider.pos.y += perp.y * speed;
 	}
 	if (sfw::getKey('D'))
 	{
 		//x += speed;
 		vec2 perp = perpendicular(facing, true);
-		x += perp.x * speed;
-		y += perp.y * speed;
+		collider.pos.x += perp.x * speed;
+		collider.pos.y += perp.y * speed;
 	}
 
 	if (sfw::getKey('Q'))
