@@ -102,6 +102,8 @@ bool CircleCollider::collide(CircleCollider& a, CircleCollider& b)
 			return false;
 		}
 	}
+
+	return false;
 }
 
 
