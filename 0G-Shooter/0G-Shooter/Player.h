@@ -23,6 +23,7 @@ public:
 
 
 
+	void applyInput();
 	void update();
 	void draw();
 

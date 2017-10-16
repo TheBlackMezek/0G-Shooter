@@ -20,8 +20,8 @@ Player::Player()
 	centerX = 800 / 2;
 	centerY = 600 / 2;
 
-	facing.x = 0;
-	facing.y = 0;
+	facing.x = cos(rotation);
+	facing.y = sin(rotation);
 
 	collider.canMove = true;
 	collider.radius = 20;
@@ -33,7 +33,8 @@ Player::~Player()
 }
 
 
-void Player::update()
+
+void Player::applyInput()
 {
 	if (sfw::getKey('Q'))
 	{
@@ -84,7 +85,10 @@ void Player::update()
 		collider.vel.x += perp.x * accel;
 		collider.vel.y += perp.y * accel;
 	}
+}
 
+void Player::update()
+{
 	collider.update();
 }
 

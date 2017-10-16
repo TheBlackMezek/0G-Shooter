@@ -60,6 +60,9 @@ bool CircleCollider::collide(CircleCollider& a, CircleCollider& b)
 		a.vel = { v1x, v1y };
 		b.vel = { v2x, v2y };
 
+		a.update();
+		b.update();
+
 
 		return true;
 	}

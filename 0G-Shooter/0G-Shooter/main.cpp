@@ -42,7 +42,7 @@ int main()
 	while (sfw::stepContext())
 	{
 		
-		player.update();
+		player.applyInput();
 
 		emitter.update();
 
@@ -53,6 +53,9 @@ int main()
 
 		CircleCollider::collide(c1, player.collider);
 
+
+
+		player.update();
 
 
 
