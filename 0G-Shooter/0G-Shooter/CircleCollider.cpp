@@ -13,7 +13,7 @@ CircleCollider::CircleCollider()
 
 	canMove = false;
 	vel = { 0, 0 };
-	drag = 1;
+	drag = 0.99;
 	mass = 10;
 }
 
@@ -30,6 +30,7 @@ void CircleCollider::update()
 	vel *= canMove;
 	pos += vel * sfw::getDeltaTime() * canMove;
 
+	vel *= drag;
 
 }
 
@@ -51,9 +52,17 @@ bool CircleCollider::collide(CircleCollider& a, CircleCollider& b)
 		//confirmed collision
 		)
 	{
-		a.vel.x = (a.vel.x * (a.mass - b.mass) + (2 * b.mass * a.vel.x) / (a.mass + b.mass));
-		b.vel.x = (b.vel.x * (b.mass - a.mass) + (2 * a.mass * b.vel.x) / (b.mass + a.mass));
-		a.vel.y = (a.vel.y * (a.mass - b.mass) + (2 * b.mass * a.vel.y) / (a.mass + b.mass));
-		b.vel.y = (b.vel.y * (b.mass - a.mass) + (2 * a.mass * b.vel.y) / (b.mass + a.mass));
+		float v1x = (a.vel.x * (a.mass - b.mass) + (2 * b.mass * b.vel.x) / (a.mass + b.mass));
+		float v2x = (b.vel.x * (b.mass - a.mass) + (2 * a.mass * a.vel.x) / (b.mass + a.mass));
+		float v1y = (a.vel.y * (a.mass - b.mass) + (2 * b.mass * b.vel.y) / (a.mass + b.mass));
+		float v2y = (b.vel.y * (b.mass - a.mass) + (2 * a.mass * a.vel.y) / (b.mass + a.mass));
+		
+		a.vel = { v1x, v1y };
+		b.vel = { v2x, v2y };
+
+
+		return true;
 	}
+
+	return false;
 }

@@ -32,17 +32,26 @@ int main()
 
 	ParticleEmitter emitter(10);
 
+	CircleCollider c1;
+	c1.pos = { 100, 500 };
+	c1.radius = 10;
+	c1.canMove = true;
+
 	
 
 	while (sfw::stepContext())
 	{
 		
 		player.update();
-		vec2 ppos;
-		ppos.x = player.x;
-		ppos.y = player.y;
 
 		emitter.update();
+
+		c1.update();
+
+
+
+
+		CircleCollider::collide(c1, player.collider);
 
 
 
@@ -52,11 +61,12 @@ int main()
 		//sfw::drawLine(lineStart.x, lineStart.y, lineEnd.x, lineEnd.y);
 		//sfw::drawCircle(player.x, player.y, 20);
 
-		emitter.draw(ppos, player.facing);
+		emitter.draw(player.collider.pos, player.facing);
 
-		Box::draw(ppos, player.facing, { 100, 100 }, { 80, 40 });
-		Box::draw(ppos, player.facing, { 500, 100 }, { 20, 90 });
-		Circle::draw(ppos, player.facing, { 100, 500 }, 10);
+		c1.draw(player.collider.pos, player.facing);
+
+		Box::draw(player.collider.pos, player.facing, { 100, 100 }, { 80, 40 });
+		Box::draw(player.collider.pos, player.facing, { 500, 100 }, { 20, 90 });
 
 	}
 

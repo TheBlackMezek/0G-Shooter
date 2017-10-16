@@ -13,11 +13,11 @@ public:
 	Player();
 	~Player();
 
-	float speed;
+	float accel;
 
 	float rotation;
 	vec2 facing;
-	float rotSpeed;
+	float rotAccel;
 
 	CircleCollider collider;
 

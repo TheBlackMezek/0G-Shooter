@@ -12,10 +12,10 @@ Player::Player()
 {
 	collider.pos.x = 0;
 	collider.pos.y = 0;
-	speed = 2;
+	accel = 5;
 
 	rotation = 0;
-	rotSpeed = 0.04;
+	rotAccel = 0.04;
 
 	centerX = 800 / 2;
 	centerY = 600 / 2;
@@ -35,36 +35,9 @@ Player::~Player()
 
 void Player::update()
 {
-	if (sfw::getKey('W'))
-	{
-		//y += speed;
-		collider.pos.x += facing.x * speed;
-		collider.pos.y += facing.y * speed;
-	}
-	if (sfw::getKey('S'))
-	{
-		//y -= speed;
-		collider.pos.x -= facing.x * speed;
-		collider.pos.y -= facing.y * speed;
-	}
-	if (sfw::getKey('A'))
-	{
-		//x -= speed;
-		vec2 perp = perpendicular(facing, false);
-		collider.pos.x += perp.x * speed;
-		collider.pos.y += perp.y * speed;
-	}
-	if (sfw::getKey('D'))
-	{
-		//x += speed;
-		vec2 perp = perpendicular(facing, true);
-		collider.pos.x += perp.x * speed;
-		collider.pos.y += perp.y * speed;
-	}
-
 	if (sfw::getKey('Q'))
 	{
-		rotation += rotSpeed;
+		rotation += rotAccel;
 		if (rotation > M_PI * 2)
 		{
 			rotation -= M_PI * 2;
@@ -74,7 +47,7 @@ void Player::update()
 	}
 	if (sfw::getKey('E'))
 	{
-		rotation -= rotSpeed;
+		rotation -= rotAccel;
 		if (rotation < 0)
 		{
 			rotation += M_PI * 2;
@@ -82,6 +55,37 @@ void Player::update()
 		facing.x = cos(rotation);
 		facing.y = sin(rotation);
 	}
+
+
+
+	if (sfw::getKey('W'))
+	{
+		//y += speed;
+		collider.vel.x += facing.x * accel;
+		collider.vel.y += facing.y * accel;
+	}
+	if (sfw::getKey('S'))
+	{
+		//y -= speed;
+		collider.vel.x -= facing.x * accel;
+		collider.vel.y -= facing.y * accel;
+	}
+	if (sfw::getKey('A'))
+	{
+		//x -= speed;
+		vec2 perp = perpendicular(facing, false);
+		collider.vel.x += perp.x * accel;
+		collider.vel.y += perp.y * accel;
+	}
+	if (sfw::getKey('D'))
+	{
+		//x += speed;
+		vec2 perp = perpendicular(facing, true);
+		collider.vel.x += perp.x * accel;
+		collider.vel.y += perp.y * accel;
+	}
+
+	collider.update();
 }
 
 void Player::draw()
