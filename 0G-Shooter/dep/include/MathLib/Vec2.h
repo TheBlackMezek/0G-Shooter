@@ -10,8 +10,8 @@ union vec2
 	//access by individual component
 	struct { float x, y; };
 
-	float& operator[]( const int idx );
-	const float& operator[](const int idx) const;
+	float& operator[]( const size_t idx );
+	const float& operator[](const size_t idx) const;
 };
 
 vec2 operator+(const vec2 &lhs, const vec2 &rhs);

@@ -10,8 +10,8 @@ union vec3
 	//access by individual component
 	struct { float x, y, z; };
 
-	float& operator[](const int idx);
-	const float& operator[](const int idx) const;
+	float& operator[](const size_t idx);
+	const float& operator[](const size_t idx) const;
 };
 
 vec3 operator+(const vec3 &lhs, const vec3 &rhs);
