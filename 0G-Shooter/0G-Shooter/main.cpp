@@ -9,6 +9,7 @@
 #include "Box.h"
 #include "Circle.h"
 #include "ParticleEmitter.h"
+#include "BoxCollider.h"
 
 
 
@@ -37,6 +38,16 @@ int main()
 	c1.radius = 10;
 	c1.canMove = false;
 
+	BoxCollider b1;
+	b1.pos = { 100, 100 };
+	b1.size = { 80, 40 };
+	b1.canMove = true;
+
+	BoxCollider b2;
+	b2.pos = { 500, 100 };
+	b2.size = { 20, 90 };
+	b2.canMove = true;
+
 	
 
 	while (sfw::stepContext())
@@ -47,11 +58,15 @@ int main()
 		emitter.update();
 
 		c1.update();
+		b1.update();
+		b2.update();
 
 
 
 
 		CircleCollider::collide(player.collider, c1);
+		//BoxCollider::collide(b1, player.collider);
+		//BoxCollider::collide(b2, player.collider);
 
 
 
@@ -60,6 +75,7 @@ int main()
 
 
 		player.draw();
+		player.drawMatrix();
 
 		//sfw::drawLine(lineStart.x, lineStart.y, lineEnd.x, lineEnd.y);
 		//sfw::drawCircle(player.x, player.y, 20);
@@ -67,9 +83,11 @@ int main()
 		emitter.draw(player.collider.pos, player.facing);
 
 		c1.draw(player.collider.pos, player.facing);
+		b1.draw(player.collider.pos, player.facing);
+		b2.draw(player.collider.pos, player.facing);
 
-		Box::draw(player.collider.pos, player.facing, { 100, 100 }, { 80, 40 });
-		Box::draw(player.collider.pos, player.facing, { 500, 100 }, { 20, 90 });
+		//Box::draw(player.collider.pos, player.facing, { 100, 100 }, { 80, 40 });
+		//Box::draw(player.collider.pos, player.facing, { 500, 100 }, { 20, 90 });
 
 	}
 

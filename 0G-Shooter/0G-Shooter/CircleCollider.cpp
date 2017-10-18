@@ -123,6 +123,18 @@ bool CircleCollider::collide(CircleCollider& a, CircleCollider& b)
 }
 
 
+bool CircleCollider::intersects(const CircleCollider& a, const vec2 start, const vec2 end)
+{
+	//taken from http://mathworld.wolfram.com/Circle-LineIntersection.html
+
+	vec2 d = { end.x - start.x, end.y - start.y };
+	float dr = magnitude(d);
+	float D = start.x * end.y - end.x * start.y;
+
+	return false;
+}
+
+
 
 vec2 CircleCollider::closestPointOnLineToPoint(vec2 start, vec2 end, vec2 point)
 {
